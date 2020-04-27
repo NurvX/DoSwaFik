@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:latest
+    networks:
+      - traefik-proxy-net
+      - nginx-net
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:nginx.akshay.nz
+        - traefik.enable=true
+        - traefik.port=80
+        - traefik.docker.network=proxy-net
+
+networks:
+  traefik-proxy-net:
+    external: true
+    name: proxy-net
+    attachable: true
+  nginx-net:
+    name: nginx-net
+    attachable: true
